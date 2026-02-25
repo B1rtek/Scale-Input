@@ -258,11 +258,10 @@ class $modify (ScaleControl, GJScaleControl) {
         } else {
             auto objsArray = editor->getSelectedObjects();
             auto center = editor->getGroupCenter(objsArray, true);
-            auto objs = ccArrayToVector<GameObject*>(objsArray);
 
             float scaleX = FLT_MIN;
             float scaleY = FLT_MIN;
-            for (auto obj : objs) {
+            for (auto obj : CCArrayExt<GameObject*>(objsArray)) {
                 float objScaleX = obj->getScaleX();
                 float objScaleY = obj->getScaleY();
                 if (objScaleX > scaleX) scaleX = objScaleX;
@@ -271,13 +270,13 @@ class $modify (ScaleControl, GJScaleControl) {
 
             float scaleMultiplier = 0.0f;
             switch (type) {
-                case ScaleType::XY: scaleMultiplier = scale / std::max(scaleX, scaleY); break; 
-                case ScaleType::X: scaleMultiplier = scale / scaleX; break; 
-                case ScaleType::Y: scaleMultiplier = scale / scaleY; break; 
+                case ScaleType::XY: scaleMultiplier = scale / std::max(scaleX, scaleY); break;
+                case ScaleType::X: scaleMultiplier = scale / scaleX; break;
+                case ScaleType::Y: scaleMultiplier = scale / scaleY; break;
                 case ScaleType::All: break;
             }
 
-            for (auto obj : objs) {
+            for (auto obj : CCArrayExt<GameObject*>(objsArray)) {
                 auto pos = obj->getPosition();
                 auto offset = pos - center;
 
